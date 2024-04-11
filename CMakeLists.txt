@@ -4,4 +4,5 @@ project(project3DSA)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(project3DSA
-        main.cpp)
+        main.cpp
+        song.h)

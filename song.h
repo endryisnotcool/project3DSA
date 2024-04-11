@@ -30,7 +30,7 @@ public:
     string getGenre();
     string getTitle();
     string getAlbum();
-    bool getExplicit();
+    bool isExplicit();
     int getPopularity();
     string getTrackID();
 };
@@ -51,7 +51,7 @@ string song::getAlbum() {
     return ALBUM;
 }
 
-bool song::getExplicit() {
+bool song::isExplicit() {
     return EXPLICIT;
 }
 

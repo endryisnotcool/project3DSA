@@ -36,33 +36,37 @@ int main() {
         vector<string> songData;
         string value;
         stringstream ss(line);
-        bool inQuotes = false;
-        string field;
+        bool hasQuotes = false;
+        string tempString;
 
         //gets the contents of each line and adds it to a vector
         while (getline(ss, value, ',')) {
-            if (!inQuotes) {
-                // If value starts with a quote, it means the field is quoted
-                if (value.front() == '\"') {
-                    inQuotes = true;
-                    field = value.substr(1);  // Remove starting quote
-                } else {
-                    songData.push_back(value);
+            //if a line has quotes
+            if(line.find('\"') != string::npos) {
+                hasQuotes = true;
+                //this may be the first half of a split line
+                if(tempString.empty()) {
+                    tempString = line;
+                    continue;
+                } else { //this is the second half of a split line with quotes indicating the split
+                    songData.push_back(tempString + line);
                 }
             } else {
-                // If value ends with a quote, it means the field is complete
-                if (value.back() == '\"') {
-                    inQuotes = false;
-                    field += "," + value.substr(0, value.size() - 1);  // Remove ending quote
-                    songData.push_back(field);
-                } else {
-                    field += "," + value;  // Add to the existing quoted field
+                if (!tempString.empty()) {
+                    songData.push_back(tempString);
+                    tempString = "";
                 }
+                songData.push_back(line);
             }
         }
 
         //parse songData vector
         string trackID = songData[1];
+        vector<string> artists;
+        stringstream s2(songData[2]);
+        string artist;
+        while (getline(s2, artist, ';'))
+            artists.push_back(artist);
         string album = songData[3];
         string title = songData[4];
         int popularity = stoi(songData[5]);
@@ -72,22 +76,16 @@ int main() {
             isExplicit = false;
         string genre = songData[20];
 
-        vector<string> artists;
-        stringstream s2(songData[2]);
-        string artist;
-        while (getline(s2, artist, ';'))
-            artists.push_back(artist);
-
         //create song object
         song *newSong = new song(artists, title, album, isExplicit, popularity, trackID, genre);
 
         //add song object to data types
         genreMap[genre].push_back(newSong);
 
-        for (string a: artists) {
+        for (string a: artists)
             artistMap[a].push_back(newSong);
-        }
     }
+
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");
     Font font;
 

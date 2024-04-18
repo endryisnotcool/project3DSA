@@ -15,6 +15,14 @@ void setText(Text &text, float x, float y) {
     text.setPosition(sf::Vector2f(x,y));
 }
 
+string toLowerCase(string s) {
+    string lowerS;
+    for(char c : s)
+        lowerS += (tolower(c));
+
+    return lowerS;
+}
+
 int main() {
     //initialize songs
     ifstream dataSet("dataset.csv");
@@ -80,10 +88,10 @@ int main() {
         song *newSong = new song(artists, title, album, isExplicit, popularity, trackID, genre);
 
         //add song object to data types
-        genreMap[genre].push_back(newSong);
+        genreMap[toLowerCase(genre)].push_back(newSong);
 
         for (string a: artists)
-            artistMap[a].push_back(newSong);
+            artistMap[toLowerCase(a)].push_back(newSong);
     }
 
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");

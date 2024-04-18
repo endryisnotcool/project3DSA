@@ -17,17 +17,17 @@ void setText(Text &text, float x, float y) {
 
 int main() {
     //initialize songs
-    ifstream dataSet("./tracks_features.csv");
+    ifstream dataSet("dataset.csv");
     string line;
     bool firstLine = true;
 
     //data types
-    unordered_map<string, vector<song*>> artistMap;
-    unordered_map<string, vector<song*>> genreMap;
+    unordered_map<string, vector<song *>> artistMap;
+    unordered_map<string, vector<song *>> genreMap;
 
-    while(getline(dataSet, line)) {
+    while (getline(dataSet, line)) {
 
-        if(firstLine) {
+        if (firstLine) {
             firstLine = false;
             continue;
         }
@@ -68,30 +68,30 @@ int main() {
         int popularity = stoi(songData[5]);
         string duration = songData[6];
         bool isExplicit = true;
-        if(songData[7] == "false")
+        if (songData[7] == "false")
             isExplicit = false;
         string genre = songData[20];
 
         vector<string> artists;
         stringstream s2(songData[2]);
         string artist;
-        while(getline(s2, artist, ';'))
+        while (getline(s2, artist, ';'))
             artists.push_back(artist);
 
         //create song object
-        song* newSong = new song(artists, title, album, isExplicit, popularity, trackID, genre);
+        song *newSong = new song(artists, title, album, isExplicit, popularity, trackID, genre);
 
         //add song object to data types
         genreMap[genre].push_back(newSong);
 
-        for (string a : artists) {
+        for (string a: artists) {
             artistMap[a].push_back(newSong);
+        }
     }
-
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");
     Font font;
 
-    if (!font.loadFromFile("Metropolis-SemiBold.otf")){
+    if (!font.loadFromFile("Metropolis-SemiBold.otf")) {
         cout << "can't load :(";
         return 0;
     }
@@ -107,12 +107,13 @@ int main() {
                           welcomeTextRect.top + welcomeTextRect.height / 2.0f);
     welcomeText.setPosition(Vector2f((float) 800 / 2.0f, ((float) 800 / 2.0f) - 150));
 
-    RectangleShape rectangle(Vector2f(400,30));
+    RectangleShape rectangle(Vector2f(400, 30));
     rectangle.setFillColor(Color::White);
     rectangle.setOutlineColor(Color::Green);
     rectangle.setOutlineThickness(4.0);
     FloatRect rectangleRect = rectangle.getLocalBounds();
-    rectangle.setOrigin(rectangleRect.left + rectangleRect.width/2.0f, rectangleRect.top + rectangleRect.height/2.0f);
+    rectangle.setOrigin(rectangleRect.left + rectangleRect.width / 2.0f,
+                        rectangleRect.top + rectangleRect.height / 2.0f);
     rectangle.setPosition(Vector2f((float) 800 / 2.0f, ((float) 800 / 2.0f) - 95));
 
     string playerName;
@@ -135,7 +136,7 @@ int main() {
     cursor.setFillColor(Color::Green);
     bool showCursor = true;
 
-    while(welcomeWindow.isOpen()){
+    while (welcomeWindow.isOpen()) {
         welcomeWindow.clear(Color::Black);
         welcomeWindow.draw(welcomeText);
         welcomeWindow.draw(rectangle);

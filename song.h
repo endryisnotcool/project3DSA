@@ -13,7 +13,6 @@ class song {
 private:
     const vector<string> ARTIST;
     const string TITLE;
-    const string YEAR;
     const string ALBUM;
     const bool EXPLICIT;
     const int POPULARITY;

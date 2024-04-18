@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.27"
+						"string" : "3.2"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "project3DSA::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-project3DSA-Debug-c132183bbd014a7a6d0f.json",
+					"jsonFile" : "target-project3DSA-Debug-c502f72aa556737c7e4b.json",
 					"name" : "project3DSA",
 					"projectIndex" : 0
 				}

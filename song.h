@@ -12,35 +12,32 @@ using namespace std;
 class song {
 private:
     const vector<string> ARTIST;
-    const string GENRE;
     const string TITLE;
+    const string YEAR;
     const string ALBUM;
     const bool EXPLICIT;
     const int POPULARITY;
     const string TRACKID;
+    const string GENRE;
 
 public:
 
     //constructor
-    song(vector<string> artist, string genre, string title, string album, bool isExplicit, int popularity, string trackID)
-    : ARTIST(artist), GENRE(genre), TITLE(title), ALBUM(album), EXPLICIT(isExplicit), POPULARITY(popularity), TRACKID(trackID) {}
+    song(vector<string> artist, string title, string album, bool isExplicit, int popularity, string trackID, string genre)
+    : ARTIST(artist), TITLE(title), ALBUM(album), EXPLICIT(isExplicit), POPULARITY(popularity), TRACKID(trackID), GENRE(genre) {}
 
     //getter functions
     vector<string> getArtist();
-    string getGenre();
     string getTitle();
     string getAlbum();
     bool isExplicit();
     int getPopularity();
     string getTrackID();
+    string getGenre();
 };
 
 vector<string> song::getArtist() {
     return ARTIST;
-}
-
-string song::getGenre() {
-    return GENRE;
 }
 
 string song::getTitle() {
@@ -63,6 +60,9 @@ string song::getTrackID() {
     return TRACKID;
 }
 
+string song::getGenre(){
+    return GENRE;
+}
 
 
 #endif

@@ -1,4 +1,4 @@
-# Install script for directory: /Users/jackdvh23/Documents/GitHub/project3DSA
+# Install script for directory: /Users/endryisnotcool/project3DSA
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/jackdvh23/Documents/GitHub/project3DSA/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/endryisnotcool/project3DSA/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

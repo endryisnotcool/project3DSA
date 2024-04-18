@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <unordered_set>
 #include <SFML/Graphics.hpp>
 #include "song.h"
 using namespace std;
@@ -19,6 +20,10 @@ int main() {
     ifstream dataSet("./tracks_features.csv");
     string line;
     bool firstLine = true;
+
+    //data types
+    unordered_map<string, vector<song*>> artistMap;
+    unordered_map<string, vector<song*>> genreMap;
 
     while(getline(dataSet, line)) {
 
@@ -55,20 +60,8 @@ int main() {
                 }
             }
         }
-        /*
-         * const vector<string> ARTIST;
-            const string TITLE;
-            const string ALBUM;
-            const bool EXPLICIT;
-            const int POPULARITY;
-            const string TRACKID;
-            const string GENRE;
 
-            num,track_id,artists,album_name,track_name,popularity,
-            duration_ms,explicit,danceability,energy,key,loudness,
-            mode,speechiness,acousticness,instrumentalness,liveness,
-            valence,tempo,time_signature,track_genre
-         * */
+        //parse songData vector
         string trackID = songData[1];
         string album = songData[3];
         string title = songData[4];
@@ -85,7 +78,14 @@ int main() {
         while(getline(s2, artist, ';'))
             artists.push_back(artist);
 
+        //create song object
         song* newSong = new song(artists, title, album, isExplicit, popularity, trackID, genre);
+
+        //add song object to data types
+        genreMap[genre].push_back(newSong);
+
+        for (string a : artists) {
+            artistMap[a].push_back(newSong);
     }
 
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");

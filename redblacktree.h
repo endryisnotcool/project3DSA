@@ -47,11 +47,11 @@ public:
     RBTree() : root(nullptr) {};
 
     void insert(string name, song newSong);
-    vector<song> search(string name) const; // changes to const
+    vector<song> treeSearch(string name) const; // changes to const
 };
 
 //right rotate around given node
-RBTree::Node* RBTree::rightRotate(RBTree::Node* node) {
+inline RBTree::Node* RBTree::rightRotate(RBTree::Node* node) {
     //get temporary nodes
     Node* left = node->left;
     Node* rightSubtree = left->right;
@@ -69,7 +69,7 @@ RBTree::Node* RBTree::rightRotate(RBTree::Node* node) {
 }
 
 //left rotate around given node
-RBTree::Node* RBTree::leftRotate(RBTree::Node* node) {
+inline RBTree::Node* RBTree::leftRotate(RBTree::Node* node) {
     Node* right = node->right;
     Node* leftSubtree = right->left;
 
@@ -87,7 +87,7 @@ RBTree::Node* RBTree::leftRotate(RBTree::Node* node) {
 
 
 //private insert helper function
-RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, string name, song newSong, bool& balanced, bool& recoloring) {
+inline RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, string name, song newSong, bool& balanced, bool& recoloring) {
     //insert node if place is found
     if (node == nullptr)
         return new Node(name, newSong);
@@ -132,7 +132,7 @@ RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, str
 
         //swap colors for uncle, node, and parent
         if(uncle!=nullptr)
-            if(uncle->red)
+            if (uncle->red)
                 uncle->red = false;
             else
                 uncle->red = true;
@@ -199,7 +199,7 @@ RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, str
 }
 
 //private search helper function
-RBTree::Node* RBTree::searchHelper(string name) const{
+inline RBTree::Node* RBTree::searchHelper(string name) const{
     Node *node = this->root;
 
 //searches by going to the right or left as needed
@@ -216,7 +216,7 @@ RBTree::Node* RBTree::searchHelper(string name) const{
 }
 
 //public insert function
-void RBTree::insert(string name, song newSong) {
+inline void RBTree::insert(string name, song newSong) {
 
     //check if item with this name already exists
     Node* x = searchHelper(name);
@@ -238,7 +238,7 @@ void RBTree::insert(string name, song newSong) {
 
 //public search function
 //searches tree by name
-vector<song> RBTree::search(string name) const {
+inline vector<song> RBTree::treeSearch(string name) const {
     Node* result = searchHelper(name);
     if(result == nullptr)
         return {};

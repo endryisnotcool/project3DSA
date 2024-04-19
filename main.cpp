@@ -4,24 +4,14 @@
 #include <string>
 #include <unordered_set>
 #include <SFML/Graphics.hpp>
-#include "song.h"
-#include "redblacktree.h"
+#include "search.h"
 using namespace std;
 using namespace sf;
-
 
 void setText(Text &text, float x, float y) {
     FloatRect textRect = text.getLocalBounds();
     text.setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
     text.setPosition(sf::Vector2f(x,y));
-}
-
-string toLowerCase(string s) {
-    string lowerS;
-    for(char c : s)
-        lowerS += (tolower(c));
-
-    return lowerS;
 }
 
 int main() {
@@ -99,6 +89,8 @@ int main() {
     }
 
     cout << endl << "successfully added " << numSongsAdded << " songs" << endl;
+
+    cout << search("MF DOOM", artistMap, genreMap, songTree, albumTree, true, "artist") << endl;
 
 
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");

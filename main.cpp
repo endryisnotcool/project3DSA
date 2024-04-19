@@ -90,7 +90,10 @@ int main() {
 
     cout << endl << "successfully added " << numSongsAdded << " songs" << endl;
 
-    cout << search("MF DOOM", artistMap, genreMap, songTree, albumTree, true, "artist") << endl;
+    vector<string> test = search("ghost", artistMap, genreMap, songTree, albumTree, true, "artist");
+    for(string s : test) {
+        cout << s << endl;
+    }
 
 
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");

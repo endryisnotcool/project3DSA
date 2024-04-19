@@ -10,7 +10,7 @@ string toLowerCase(string s) {
     return lowerS;
 }
 
-string search(const string& query, const unordered_map<string, vector<song>>& artistMap,
+vector<string> search(const string& query, const unordered_map<string, vector<song>>& artistMap,
                      const unordered_map<string, vector<song>>& genreMap, RBTree songTree,
                      RBTree albumTree, bool includeExplicit, const string& searchType) {
     vector<song> songs;
@@ -25,7 +25,7 @@ string search(const string& query, const unordered_map<string, vector<song>>& ar
         if(searchResult != artistMap.end()) {
             songs = searchResult->second;
         } else {
-            return "";
+            return {""};
         }
     } else if (searchType == "album") {
         // search by album
@@ -39,14 +39,15 @@ string search(const string& query, const unordered_map<string, vector<song>>& ar
         if(searchResult != artistMap.end()) {
             songs = searchResult->second;
         } else {
-            return "";
+            return {""};
         }
     }
     else {
         cout << "Invalid search type. Please choose from 'song', 'artist', 'album', or 'genre'." << endl;
-        return "";
+        return {""};
     }
     string returnString;
+    vector<string> returnList;
 
     sort(songs.begin(), songs.end(), compareByPopularity);
 
@@ -66,6 +67,7 @@ string search(const string& query, const unordered_map<string, vector<song>>& ar
         //cout << "Album: " << s.getAlbum() << ", Genre: " << s.getGenre()
         //    << ", Popularity: " << s.getPopularity() << ", Track ID: " << s.getTrackID() << endl;
         returnString += s.getAlbum() + ";" + s.getGenre();
+        returnList.push_back(returnString);
     }
-    return returnString;
+    return returnList;
 }

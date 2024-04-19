@@ -12,7 +12,7 @@ using namespace std;
 
 string toLowerCase(string s);
 
-string search(const string& query, const unordered_map<string, vector<song>>& artistMap,
+vector<string> search(const string& query, const unordered_map<string, vector<song>>& artistMap,
             const unordered_map<string, vector<song>>& genreMap, RBTree songTree,
             RBTree albumTree, bool includeExplicit, const string& searchType);
 

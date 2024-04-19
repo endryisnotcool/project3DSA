@@ -46,7 +46,7 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
         cout << "Invalid search type. Please choose from 'song', 'artist', 'album', or 'genre'." << endl;
         return {""};
     }
-    string returnString;
+
     vector<string> returnList;
 
     sort(songs.begin(), songs.end(), compareByPopularity);
@@ -54,6 +54,7 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
     for (const auto& s : songs) {
         if (!includeExplicit && s.isExplicit())
             continue;
+        string returnString;
         //cout << "Title: " << s.getTitle() << ", Artist(s): ";
         returnString += s.getTitle() + ";";
 

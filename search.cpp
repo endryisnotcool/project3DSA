@@ -16,11 +16,11 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
     vector<song> songs;
     if (searchType == "song") {
         // search by song title
-        cout << "Songs with title matching '" << query << "':" << endl;
+        cout << "Songs with title matching '" << query << "': ";
         songs = songTree.treeSearch(toLowerCase(query));
     } else if (searchType == "artist") {
         // search by artist
-        cout << "Songs by artist matching '" << query << "':" << endl;
+        cout << "Songs by artist matching '" << query << "': ";
         auto searchResult = artistMap.find(toLowerCase(query));
         if(searchResult != artistMap.end()) {
             songs = searchResult->second;
@@ -29,12 +29,12 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
         }
     } else if (searchType == "album") {
         // search by album
-        cout << "Songs from album matching '" << query << "':" << endl;
+        cout << "Songs from album matching '" << query << "': ";
         songs = albumTree.treeSearch(toLowerCase(query));
 
     } else if (searchType == "genre") {
         // search by genre
-        cout << "Songs with genre matching '" << query << "':" << endl;
+        cout << "Songs with genre matching '" << query << "': ";
         auto searchResult = genreMap.find(toLowerCase(query));
         if(searchResult != artistMap.end()) {
             songs = searchResult->second;
@@ -46,11 +46,11 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
         cout << "Invalid search type. Please choose from 'song', 'artist', 'album', or 'genre'." << endl;
         return {""};
     }
+    cout << songs.size() << endl;
 
-    vector<string> returnList;
-
+    //get songs ready for return by sorting and putting in proper format
     sort(songs.begin(), songs.end(), compareByPopularity);
-
+    vector<string> returnList;
     for (const auto& s : songs) {
         if (!includeExplicit && s.isExplicit())
             continue;

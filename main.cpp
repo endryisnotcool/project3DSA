@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <SFML/Graphics.hpp>
 #include "song.h"
+#include "redblacktree.h"
 using namespace std;
 using namespace sf;
 
@@ -30,8 +31,10 @@ int main() {
     bool firstLine = true;
 
     //data types
-    unordered_map<string, vector<song *>> artistMap;
-    unordered_map<string, vector<song *>> genreMap;
+    unordered_map<string, vector<song>> artistMap;
+    unordered_map<string, vector<song>> genreMap;
+    RBTree songTree;
+    RBTree albumTree;
 
     while (getline(dataSet, line)) {
 
@@ -44,29 +47,29 @@ int main() {
         vector<string> songData;
         string value;
         stringstream ss(line);
-        bool hasQuotes = false;
         string tempString;
 
         //gets the contents of each line and adds it to a vector
         while (getline(ss, value, ',')) {
             //if a line has quotes
             if(line.find('\"') != string::npos) {
-                hasQuotes = true;
                 //this may be the first half of a split line
                 if(tempString.empty()) {
-                    tempString = line;
+                    tempString = value;
                     continue;
                 } else { //this is the second half of a split line with quotes indicating the split
-                    songData.push_back(tempString + line);
+                    songData.push_back(tempString + value);
                 }
             } else {
                 if (!tempString.empty()) {
                     songData.push_back(tempString);
                     tempString = "";
                 }
-                songData.push_back(line);
+                songData.push_back(value);
             }
         }
+
+        cout << "adding song " << songData[0] << endl;
 
         //parse songData vector
         string trackID = songData[1];
@@ -85,13 +88,17 @@ int main() {
         string genre = songData[20];
 
         //create song object
-        song *newSong = new song(artists, title, album, isExplicit, popularity, trackID, genre);
+        song newSong(artists, title, album, isExplicit, popularity, trackID, genre);
 
         //add song object to data types
         genreMap[toLowerCase(genre)].push_back(newSong);
 
         for (string a: artists)
             artistMap[toLowerCase(a)].push_back(newSong);
+
+        songTree.insert(toLowerCase(title), newSong);
+
+        albumTree.insert(toLowerCase(album), newSong);
     }
 
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");

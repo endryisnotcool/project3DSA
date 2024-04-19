@@ -1,7 +1,7 @@
 //song class
 
-#ifndef UNTITLED1_SONG_H
-#define UNTITLED1_SONG_H
+#ifndef PROJECT3DSA_SONG_H
+#define PROJECT3DSA_SONG_H
 
 #include <vector>
 #include <string>

@@ -41,13 +41,13 @@ private:
     Node* rightRotate(Node* node);
     Node* leftRotate(Node* node);
     Node* insertHelper(Node* node, Node* parent, string name, song newSong, bool& balanced, bool& recoloring);
-    Node* searchHelper(string name);
+    Node* searchHelper(string name) const;
 
 public:
     RBTree() : root(nullptr) {};
 
     void insert(string name, song newSong);
-    vector<song> search(string name);
+    vector<song> search(string name) const; // changes to const
 };
 
 //right rotate around given node
@@ -199,7 +199,7 @@ RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, str
 }
 
 //private search helper function
-RBTree::Node* RBTree::searchHelper(string name) {
+RBTree::Node* RBTree::searchHelper(string name) const{
     Node *node = this->root;
 
 //searches by going to the right or left as needed
@@ -238,7 +238,7 @@ void RBTree::insert(string name, song newSong) {
 
 //public search function
 //searches tree by name
-vector<song> RBTree::search(string name) {
+vector<song> RBTree::search(string name) const {
     Node* result = searchHelper(name);
     if(result == nullptr)
         return {};

@@ -1,5 +1,5 @@
-#ifndef SEARCH_H
-#define SEARCH_H
+#ifndef PROJECT3DSA_SEARCH_H
+#define PROJECT3DSA_SEARCH_H
 
 #include <iostream>
 #include <string>
@@ -13,4 +13,4 @@ void search(const std::string& query, const std::unordered_map<std::string, std:
             const std::unordered_map<std::string, std::vector<song>>& genreMap, const RBTree& songTree,
             const RBTree& albumTree, bool includeExplicit, const std::string& searchType);
 
-#endif // SEARCH_H
+#endif // PROJECT3DSA_SEARCH_H

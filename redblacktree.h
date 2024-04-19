@@ -30,8 +30,8 @@ private:
         bool red;
 
         //node constructor
-        Node(string name)
-                : NAME(name), left(nullptr), right(nullptr), songs({}), red(true)  {}
+        Node(string name, song newSong)
+                : NAME(name), left(nullptr), right(nullptr), songs({newSong}), red(true)  {}
     };
 
     //RedBlackTree root variable
@@ -40,7 +40,7 @@ private:
     //declare helper functions
     Node* rightRotate(Node* node);
     Node* leftRotate(Node* node);
-    Node* insertHelper(Node* node, Node* parent, string name, bool& balanced, bool& recoloring);
+    Node* insertHelper(Node* node, Node* parent, string name, song newSong, bool& balanced, bool& recoloring);
     Node* searchHelper(string name);
 
 public:
@@ -61,9 +61,8 @@ RBTree::Node* RBTree::rightRotate(RBTree::Node* node) {
     node->left = rightSubtree;
 
     //update root if rotated node was previously root
-    if(this->root == node) {
+    if(this->root == node)
         this->root = left;
-    }
 
     //return new node
     return left;
@@ -79,9 +78,8 @@ RBTree::Node* RBTree::leftRotate(RBTree::Node* node) {
     node->right = leftSubtree;
 
     //update root if rotated node was previously root
-    if(this->root == node) {
+    if(this->root == node)
         this->root = right;
-    }
 
     //return new node
     return right;
@@ -89,17 +87,25 @@ RBTree::Node* RBTree::leftRotate(RBTree::Node* node) {
 
 
 //private insert helper function
-RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, string name, bool& balanced, bool& recoloring) {
+RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, string name, song newSong, bool& balanced, bool& recoloring) {
     //insert node if place is found
     if (node == nullptr)
-        return new Node(name);
+        return new Node(name, newSong);
 
     //search for correct spot
-    if (name < node->NAME)
-        node->left = insertHelper(node->left, node, name, balanced, recoloring);
-    else if (name > node->NAME)
-        node->right = insertHelper(node->right, node, name, balanced, recoloring);
-
+    if (name < node->NAME) {
+        Node* newNode = insertHelper(node->left, node, name, newSong, balanced, recoloring);
+        if(newNode->left == node || newNode->right == node)
+            return newNode;
+        else
+            node->left = newNode;
+    } else if (name > node->NAME) {
+        Node* newNode = insertHelper(node->right, node, name, newSong, balanced, recoloring);
+        if(newNode->left == node || newNode->right == node)
+            return newNode;
+        else
+            node->right = newNode;
+    }
 
 
     //balance tree
@@ -157,41 +163,39 @@ RBTree::Node* RBTree::insertHelper(RBTree::Node* node, RBTree::Node* parent, str
 
     //left left case
     if (parent->left == node && node->left == child) {
-        bool oldColor = node->red;
-        node->red = parent->red;
-        parent->red = oldColor;
+        node->red = false;
+        parent->red = true;
         balanced = true;
-        return rightRotate(parent);
+        node = rightRotate(parent);
     }
 
     //right right case
     if (parent->right == node && node->right == child) {
-        bool oldColor = node->red;
-        node->red = parent->red;
-        parent->red = oldColor;
+        node->red = false;
+        parent->red = true;
         balanced = true;
-        return leftRotate(parent);
+        node = leftRotate(parent);
     }
 
     //left right case
     if (parent->left == node && node->right == child) {
         node = leftRotate(node);
-        bool oldColor = node->red;
-        node->red = parent->red;
-        parent->red = oldColor;
+        node->red = false;
+        parent->red = true;
         balanced = true;
-        return rightRotate(parent);
+        node = rightRotate(parent);
     }
 
     //right left case
     if (parent->right == node && node->left == child) {
         node = rightRotate(node);
-        bool oldColor = node->red;
-        node->red = parent->red;
-        parent->red = oldColor;
+        node->red = false;
+        parent->red = true;
         balanced = true;
-        return rightRotate(parent);
+        node = leftRotate(parent);
     }
+
+    return node;
 }
 
 //private search helper function
@@ -215,21 +219,21 @@ RBTree::Node* RBTree::searchHelper(string name) {
 void RBTree::insert(string name, song newSong) {
 
     //check if item with this name already exists
-    Node* newNode = searchHelper(name);
-    if(newNode == nullptr) {
+    Node* x = searchHelper(name);
 
-        //create new node if one does not already exist for this name
-        bool balanced = false;
-        bool recoloring = false;
-        if (this->root == nullptr) {  //create root if one does not already exist
-            this->root = insertHelper(nullptr, nullptr, name, balanced, recoloring);
-            this->root->red = false;
-            this->root->songs.push_back(newSong);
-            return;
-        } else
-            newNode = insertHelper(this->root, nullptr, name, balanced, recoloring);
+    if(x != nullptr) {
+        x->songs.push_back(newSong);
+        return;
     }
-    newNode->songs.push_back(newSong);
+
+    //create new node if one does not already exist for this name
+    bool balanced = false;
+    bool recoloring = false;
+    if (this->root == nullptr) {  //create root if one does not already exist
+        this->root = insertHelper(nullptr, nullptr, name, newSong, balanced, recoloring);
+        this->root->red = false;
+    } else
+        insertHelper(this->root, nullptr, name, newSong, balanced, recoloring);
 }
 
 //public search function

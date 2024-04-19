@@ -29,17 +29,28 @@ int main() {
     ifstream dataSet("dataset.csv");
     string line;
     bool firstLine = true;
+    int numSongsAdded = 0;
 
     //data types
     unordered_map<string, vector<song>> artistMap;
     unordered_map<string, vector<song>> genreMap;
     RBTree songTree;
     RBTree albumTree;
-
     while (getline(dataSet, line)) {
-
         if (firstLine) {
             firstLine = false;
+            continue;
+        }
+
+        /*
+         * because of the ABSURD complexity of adding songs
+         * whose titles contain quotes (look at entry 725 to see what I mean)
+         * I have decided to skip songs with quotes in titles.
+         * The database still has n > 100,000 with this restriction. (n = 104,977)
+         *
+         * -Jack
+         * */
+        if(line.find('\"') != string::npos) {
             continue;
         }
 
@@ -47,29 +58,11 @@ int main() {
         vector<string> songData;
         string value;
         stringstream ss(line);
-        string tempString;
 
-        //gets the contents of each line and adds it to a vector
+        //get data from dataset
         while (getline(ss, value, ',')) {
-            //if a line has quotes
-            if(line.find('\"') != string::npos) {
-                //this may be the first half of a split line
-                if(tempString.empty()) {
-                    tempString = value;
-                    continue;
-                } else { //this is the second half of a split line with quotes indicating the split
-                    songData.push_back(tempString + value);
-                }
-            } else {
-                if (!tempString.empty()) {
-                    songData.push_back(tempString);
-                    tempString = "";
-                }
-                songData.push_back(value);
-            }
+            songData.push_back(value);
         }
-
-        cout << "adding song " << songData[0] << endl;
 
         //parse songData vector
         string trackID = songData[1];
@@ -96,10 +89,17 @@ int main() {
         for (string a: artists)
             artistMap[toLowerCase(a)].push_back(newSong);
 
+
         songTree.insert(toLowerCase(title), newSong);
 
+
         albumTree.insert(toLowerCase(album), newSong);
+
+        numSongsAdded++;
     }
+
+    cout << endl << "successfully added " << numSongsAdded << " songs" << endl;
+
 
     RenderWindow welcomeWindow(VideoMode(800, 800), "songSearcher");
     Font font;

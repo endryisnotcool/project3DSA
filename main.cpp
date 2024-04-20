@@ -2,21 +2,122 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
+#include <unordered_map>
 #include <SFML/Graphics.hpp>
+#include "song.h"
+#include "redblacktree.h"
+#include "search.h"
 using namespace std;
 using namespace sf;
 
 
 int main() {
+    //initialize songs
+    ifstream dataSet("dataset.csv");
+    string line;
+    bool firstLine = true;
+    int numSongsAdded = 0;
+
+
+    //data types
+    unordered_map<string, vector<song>> artistMap;
+    unordered_map<string, vector<song>> genreMap;
+    RBTree songTree;
+    RBTree albumTree;
+    while (getline(dataSet, line)) {
+        if (firstLine) {
+            firstLine = false;
+            continue;
+        }
+
+
+        /*
+         * because of the ABSURD complexity of adding songs
+         * whose titles contain quotes (look at entry 725 to see what I mean)
+         * I have decided to skip songs with quotes in titles.
+         * The database still has n > 100,000 with this restriction. (n = 104,977)
+         *
+         * -Jack
+         * */
+        if(line.find('\"') != string::npos) {
+            continue;
+        }
+
+
+        //setup
+        vector<string> songData;
+        string value;
+        stringstream ss(line);
+
+
+        //get data from dataset
+        while (getline(ss, value, ',')) {
+            songData.push_back(value);
+        }
+
+
+        //parse songData vector
+        string trackID = songData[1];
+        vector<string> artists;
+        stringstream s2(songData[2]);
+        string artist;
+        while (getline(s2, artist, ';'))
+            artists.push_back(artist);
+        string album = songData[3];
+        string title = songData[4];
+        int popularity = stoi(songData[5]);
+        string duration = songData[6];
+        bool isExplicit = true;
+        if (songData[7] == "false")
+            isExplicit = false;
+        string genre = songData[20];
+
+
+        //create song object
+        song newSong(artists, title, album, isExplicit, popularity, trackID, genre);
+
+
+        //add song object to data types
+        genreMap[toLowerCase(genre)].push_back(newSong);
+
+
+        for (string a: artists)
+            artistMap[toLowerCase(a)].push_back(newSong);
+
+
+
+
+        songTree.insert(toLowerCase(title), newSong);
+
+
+
+
+        albumTree.insert(toLowerCase(album), newSong);
+
+
+        numSongsAdded++;
+    }
+
+
+    cout << endl << "successfully added " << numSongsAdded << " songs" << endl;
+
+
+    vector<string> test = search("mary on a cross", artistMap, genreMap, songTree, albumTree, true, "song");
+    for(string s : test) {
+        cout << s << endl;
+    }
+
+
     RenderWindow programWindow(VideoMode(800, 800), "songSearcher");
     Font font;
+
+
 
 
     if (!font.loadFromFile("Metropolis-SemiBold.otf")){
         cout << "can't load :(";
         return 0;
     }
-
 
     Text programName;
     programName.setString("WELCOME TO SONGSEARCHER");
@@ -28,6 +129,8 @@ int main() {
     programName.setOrigin(programNameRect.left + programNameRect.width / 2.0f,
                           programNameRect.top + programNameRect.height / 2.0f);
     programName.setPosition(Vector2f(400, 250));
+
+
 
 
     Text searchBy;
@@ -42,6 +145,8 @@ int main() {
     searchBy.setPosition(Vector2f(260, 375));
 
 
+
+
     Text songName;
     songName.setString("Song Name");
     songName.setFont(font);
@@ -52,6 +157,8 @@ int main() {
     songName.setOrigin(songNameRect.left + songNameRect.width / 2.0f,
                        songNameRect.top + songNameRect.height / 2.0f);
     songName.setPosition(Vector2f(328, 425));
+
+
 
 
     Text genreName;
@@ -66,6 +173,8 @@ int main() {
     genreName.setPosition(Vector2f(305, 475));
 
 
+
+
     Text artistName;
     artistName.setString("Artist Name");
     artistName.setFont(font);
@@ -76,6 +185,8 @@ int main() {
     artistName.setOrigin(artistNameRect.left + artistNameRect.width / 2.0f,
                          artistNameRect.top + artistNameRect.height / 2.0f);
     artistName.setPosition(Vector2f(330, 525));
+
+
 
 
     Text albumName;
@@ -90,6 +201,8 @@ int main() {
     albumName.setPosition(Vector2f(335, 575));
 
 
+
+
     Text explicitTitle;
     explicitTitle.setString("Explicit");
     explicitTitle.setFont(font);
@@ -102,6 +215,8 @@ int main() {
     explicitTitle.setPosition(Vector2f(515, 500));
 
 
+
+
     RectangleShape rectangle(Vector2f(400,30));
     rectangle.setFillColor(Color::White);
     rectangle.setOutlineColor(Color::Green);
@@ -109,6 +224,8 @@ int main() {
     FloatRect rectangleRect = rectangle.getLocalBounds();
     rectangle.setOrigin(rectangleRect.left + rectangleRect.width/2.0f, rectangleRect.top + rectangleRect.height/2.0f);
     rectangle.setPosition(Vector2f(400, 305));
+
+
 
 
     CircleShape songButton(15);
@@ -120,6 +237,8 @@ int main() {
     songButton.setPosition(Vector2f(250, 425));
 
 
+
+
     CircleShape genreButton(15);
     genreButton.setFillColor(Color::White);
     genreButton.setOutlineColor(Color::Green);
@@ -127,6 +246,8 @@ int main() {
     FloatRect genreRect = genreButton.getLocalBounds();
     genreButton.setOrigin(genreRect.left + genreRect.width/2.0f, genreRect.top + genreRect.height/2.0f);
     genreButton.setPosition(Vector2f(250, 475));
+
+
 
 
     CircleShape artistButton(15);
@@ -138,6 +259,8 @@ int main() {
     artistButton.setPosition(Vector2f(250, 525));
 
 
+
+
     CircleShape albumButton(15);
     albumButton.setFillColor(Color::White);
     albumButton.setOutlineColor(Color::Green);
@@ -145,6 +268,8 @@ int main() {
     FloatRect albumRect = albumButton.getLocalBounds();
     albumButton.setOrigin(albumRect.left + albumRect.width/2.0f, albumRect.top + albumRect.height/2.0f);
     albumButton.setPosition(Vector2f(250, 575));
+
+
 
 
     CircleShape explicitButton(15);
@@ -156,8 +281,16 @@ int main() {
     explicitButton.setPosition(Vector2f(450, 500));
 
 
+
+
     CircleShape fillButton(10);
     fillButton.setFillColor(Color::Green);
+
+
+    CircleShape explicitFill(10);
+    explicitFill.setFillColor(Color::Red);
+
+
 
 
     string userInputString;
@@ -173,6 +306,8 @@ int main() {
     userInput.setPosition(Vector2f((float) 800 / 2.0f, ((float) 800 / 2.0f) - 95));
 
 
+
+
     Text cursor;
     cursor.setString("|");
     cursor.setFont(font);
@@ -185,8 +320,6 @@ int main() {
     bool albumNameClicked = false;
     bool artistNameClicked = false;
     bool explicitClicked = false;
-
-
 
 
     while(programWindow.isOpen()){
@@ -205,6 +338,36 @@ int main() {
         programWindow.draw(artistButton);
         programWindow.draw(albumButton);
         programWindow.draw(explicitButton);
+        if (songClicked){
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
+            fillButton.setPosition(Vector2f(250,425));
+            programWindow.draw(fillButton);
+        }
+        else if (genreClicked){
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
+            fillButton.setPosition(Vector2f(250,475));
+            programWindow.draw(fillButton);
+        }
+        else if (artistNameClicked){
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
+            fillButton.setPosition(Vector2f(250,525));
+            programWindow.draw(fillButton);
+        }
+        else if (albumNameClicked){
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
+            fillButton.setPosition(Vector2f(250,575));
+            programWindow.draw(fillButton);
+        }
+        if (explicitClicked){
+            FloatRect explicitButtonRect = explicitFill.getLocalBounds();
+            explicitFill.setOrigin(explicitButtonRect.left + explicitButtonRect.width/2.0f, explicitButtonRect.top + explicitButtonRect.height/2.0f);
+            explicitFill.setPosition(Vector2f(450,500));
+            programWindow.draw(explicitFill);
+        }
 
 
         if (userInputString.empty()) {
@@ -236,8 +399,19 @@ int main() {
             }
             else if (Mouse::isButtonPressed(Mouse::Left)){
                 if (songButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
-
-
+                    songClicked = !songClicked;
+                }
+                else if (genreButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
+                    genreClicked = !genreClicked;
+                }
+                else if (artistButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
+                    artistNameClicked = !artistNameClicked;
+                }
+                else if (albumButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
+                    albumNameClicked = !albumNameClicked;
+                }
+                else if (explicitButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
+                    explicitClicked = !explicitClicked;
                 }
             }
             else if (programEvent.type == Event::KeyPressed) {
@@ -248,6 +422,8 @@ int main() {
                     userInput.setString(userInputString);
                 } else if (programEvent.key.code == Keyboard::LShift || programEvent.key.code == Keyboard::RShift){
                     shift = true;
+                } else if (programEvent.key.code == Keyboard::Enter){
+                    programWindow.close();
                 }
             }
             else if (programEvent.type == Event::TextEntered) {
@@ -271,4 +447,5 @@ int main() {
             }
         }
     }
+    RenderWindow resultWindow(VideoMode(800,800), "Result");
 }

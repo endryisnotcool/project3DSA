@@ -18,7 +18,6 @@ int main() {
     bool firstLine = true;
     int numSongsAdded = 0;
 
-
     //data types
     unordered_map<string, vector<song>> artistMap;
     unordered_map<string, vector<song>> genreMap;
@@ -43,18 +42,15 @@ int main() {
             continue;
         }
 
-
         //setup
         vector<string> songData;
         string value;
         stringstream ss(line);
 
-
         //get data from dataset
         while (getline(ss, value, ',')) {
             songData.push_back(value);
         }
-
 
         //parse songData vector
         string trackID = songData[1];
@@ -72,28 +68,18 @@ int main() {
             isExplicit = false;
         string genre = songData[20];
 
-
         //create song object
         song newSong(artists, title, album, isExplicit, popularity, trackID, genre);
-
 
         //add song object to data types
         genreMap[toLowerCase(genre)].push_back(newSong);
 
-
         for (string a: artists)
             artistMap[toLowerCase(a)].push_back(newSong);
 
-
-
-
         songTree.insert(toLowerCase(title), newSong);
 
-
-
-
         albumTree.insert(toLowerCase(album), newSong);
-
 
         numSongsAdded++;
     }
@@ -102,10 +88,10 @@ int main() {
     cout << endl << "successfully added " << numSongsAdded << " songs" << endl;
 
 
-    vector<string> test = search("mary on a cross", artistMap, genreMap, songTree, albumTree, true, "song");
+    /*vector<string> test = search("mary on a cross", artistMap, genreMap, songTree, albumTree, true, "song");
     for(string s : test) {
-        cout << s << endl;
-    }
+       cout << s << endl;
+    }*/
 
 
     RenderWindow programWindow(VideoMode(800, 800), "songSearcher");
@@ -447,5 +433,43 @@ int main() {
             }
         }
     }
-    RenderWindow resultWindow(VideoMode(800,800), "Result");
+
+    RenderWindow resultWindow(VideoMode(800,800), "Results");
+
+    if (songClicked){
+        auto startTime = chrono::steady_clock::now();
+        vector<string> songResults = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "song");
+        auto endTime = chrono::steady_clock::now();
+        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
+    }
+    else if (genreClicked){
+        auto startTime = chrono::steady_clock::now();
+        vector<string> genreResults = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "genre");
+        auto endTime = chrono::steady_clock::now();
+        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
+    }
+    else if (artistNameClicked){
+        auto startTime = chrono::steady_clock::now();
+        vector<string> artistResults = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "artist");
+        auto endTime = chrono::steady_clock::now();
+        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
+    }
+    else if (albumNameClicked){
+        auto startTime = chrono::steady_clock::now();
+        vector<string> albumNameClicked = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "album");
+        auto endTime = chrono::steady_clock::now();
+        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
+    }
+
+    while (resultWindow.isOpen()){
+        resultWindow.clear(Color::Black);
+
+        Event resultEvent;
+        while (resultWindow.pollEvent(resultEvent)){
+            if (resultEvent.type == Event::Closed){
+                resultWindow.close();
+                return 0;
+            }
+        }
+    }
 }

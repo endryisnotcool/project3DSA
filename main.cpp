@@ -540,8 +540,10 @@ int main() {
                         resultWindow.display();
                     }
                 } else if (programEvent.key.code == Keyboard::Backspace) {
-                    userInputString.pop_back();
-                    userInput.setString(userInputString);
+                    if (userInputString.length() > 0){
+                        userInputString.pop_back();
+                        userInput.setString(userInputString);
+                    }
                 } else if (programEvent.key.code == Keyboard::LShift || programEvent.key.code == Keyboard::RShift) {
                     shift = true;
                 }

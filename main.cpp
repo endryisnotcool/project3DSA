@@ -38,7 +38,7 @@ int main() {
          *
          * -Jack
          * */
-        if(line.find('\"') != string::npos) {
+        if (line.find('\"') != string::npos) {
             continue;
         }
 
@@ -98,9 +98,7 @@ int main() {
     Font font;
 
 
-
-
-    if (!font.loadFromFile("Metropolis-SemiBold.otf")){
+    if (!font.loadFromFile("Metropolis-SemiBold.otf")) {
         cout << "can't load :(";
         return 0;
     }
@@ -117,8 +115,6 @@ int main() {
     programName.setPosition(Vector2f(400, 250));
 
 
-
-
     Text searchBy;
     searchBy.setString("Search By:");
     searchBy.setFont(font);
@@ -129,8 +125,6 @@ int main() {
     searchBy.setOrigin(searchByRect.left + searchByRect.width / 2.0f,
                        searchByRect.top + searchByRect.height / 2.0f);
     searchBy.setPosition(Vector2f(260, 375));
-
-
 
 
     Text songName;
@@ -145,8 +139,6 @@ int main() {
     songName.setPosition(Vector2f(328, 425));
 
 
-
-
     Text genreName;
     genreName.setString("Genre");
     genreName.setFont(font);
@@ -157,8 +149,6 @@ int main() {
     genreName.setOrigin(genreNameRect.left + genreNameRect.width / 2.0f,
                         genreNameRect.top + genreNameRect.height / 2.0f);
     genreName.setPosition(Vector2f(305, 475));
-
-
 
 
     Text artistName;
@@ -173,8 +163,6 @@ int main() {
     artistName.setPosition(Vector2f(330, 525));
 
 
-
-
     Text albumName;
     albumName.setString("Album Name");
     albumName.setFont(font);
@@ -185,8 +173,6 @@ int main() {
     albumName.setOrigin(albumNameRect.left + albumNameRect.width / 2.0f,
                         albumNameRect.top + albumNameRect.height / 2.0f);
     albumName.setPosition(Vector2f(335, 575));
-
-
 
 
     Text explicitTitle;
@@ -201,17 +187,14 @@ int main() {
     explicitTitle.setPosition(Vector2f(515, 500));
 
 
-
-
-    RectangleShape rectangle(Vector2f(400,30));
+    RectangleShape rectangle(Vector2f(400, 30));
     rectangle.setFillColor(Color::White);
     rectangle.setOutlineColor(Color::Green);
     rectangle.setOutlineThickness(4.0);
     FloatRect rectangleRect = rectangle.getLocalBounds();
-    rectangle.setOrigin(rectangleRect.left + rectangleRect.width/2.0f, rectangleRect.top + rectangleRect.height/2.0f);
+    rectangle.setOrigin(rectangleRect.left + rectangleRect.width / 2.0f,
+                        rectangleRect.top + rectangleRect.height / 2.0f);
     rectangle.setPosition(Vector2f(400, 305));
-
-
 
 
     CircleShape songButton(15);
@@ -219,10 +202,8 @@ int main() {
     songButton.setOutlineColor(Color::Green);
     songButton.setOutlineThickness(2.0);
     FloatRect songRect = songButton.getLocalBounds();
-    songButton.setOrigin(songRect.left + songRect.width/2.0f, songRect.top + songRect.height/2.0f);
+    songButton.setOrigin(songRect.left + songRect.width / 2.0f, songRect.top + songRect.height / 2.0f);
     songButton.setPosition(Vector2f(250, 425));
-
-
 
 
     CircleShape genreButton(15);
@@ -230,10 +211,8 @@ int main() {
     genreButton.setOutlineColor(Color::Green);
     genreButton.setOutlineThickness(2.0);
     FloatRect genreRect = genreButton.getLocalBounds();
-    genreButton.setOrigin(genreRect.left + genreRect.width/2.0f, genreRect.top + genreRect.height/2.0f);
+    genreButton.setOrigin(genreRect.left + genreRect.width / 2.0f, genreRect.top + genreRect.height / 2.0f);
     genreButton.setPosition(Vector2f(250, 475));
-
-
 
 
     CircleShape artistButton(15);
@@ -241,10 +220,8 @@ int main() {
     artistButton.setOutlineColor(Color::Green);
     artistButton.setOutlineThickness(2.0);
     FloatRect artistRect = artistButton.getLocalBounds();
-    artistButton.setOrigin(artistRect.left + artistRect.width/2.0f, artistRect.top + artistRect.height/2.0f);
+    artistButton.setOrigin(artistRect.left + artistRect.width / 2.0f, artistRect.top + artistRect.height / 2.0f);
     artistButton.setPosition(Vector2f(250, 525));
-
-
 
 
     CircleShape albumButton(15);
@@ -252,10 +229,8 @@ int main() {
     albumButton.setOutlineColor(Color::Green);
     albumButton.setOutlineThickness(2.0);
     FloatRect albumRect = albumButton.getLocalBounds();
-    albumButton.setOrigin(albumRect.left + albumRect.width/2.0f, albumRect.top + albumRect.height/2.0f);
+    albumButton.setOrigin(albumRect.left + albumRect.width / 2.0f, albumRect.top + albumRect.height / 2.0f);
     albumButton.setPosition(Vector2f(250, 575));
-
-
 
 
     CircleShape explicitButton(15);
@@ -263,10 +238,9 @@ int main() {
     explicitButton.setOutlineColor(Color::Red);
     explicitButton.setOutlineThickness(2.0);
     FloatRect explicitRect = explicitButton.getLocalBounds();
-    explicitButton.setOrigin(explicitRect.left + explicitRect.width/2.0f, explicitRect.top + explicitRect.height/2.0f);
+    explicitButton.setOrigin(explicitRect.left + explicitRect.width / 2.0f,
+                             explicitRect.top + explicitRect.height / 2.0f);
     explicitButton.setPosition(Vector2f(450, 500));
-
-
 
 
     CircleShape fillButton(10);
@@ -275,8 +249,6 @@ int main() {
 
     CircleShape explicitFill(10);
     explicitFill.setFillColor(Color::Red);
-
-
 
 
     string userInputString;
@@ -290,8 +262,6 @@ int main() {
     userInput.setOrigin(userInputRect.left + userInputRect.width / 2.0f,
                         userInputRect.top + userInputRect.height / 2.0f);
     userInput.setPosition(Vector2f((float) 800 / 2.0f, ((float) 800 / 2.0f) - 95));
-
-
 
 
     Text cursor;
@@ -308,7 +278,7 @@ int main() {
     bool explicitClicked = false;
 
 
-    while(programWindow.isOpen()){
+    while (programWindow.isOpen()) {
         programWindow.clear(Color::Black);
         programWindow.draw(programName);
         programWindow.draw(rectangle);
@@ -324,45 +294,46 @@ int main() {
         programWindow.draw(artistButton);
         programWindow.draw(albumButton);
         programWindow.draw(explicitButton);
-        if (songClicked){
+        if (songClicked) {
             FloatRect fillButtonRect = fillButton.getLocalBounds();
-            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
-            fillButton.setPosition(Vector2f(250,425));
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width / 2.0f,
+                                 fillButtonRect.top + fillButtonRect.height / 2.0f);
+            fillButton.setPosition(Vector2f(250, 425));
+            programWindow.draw(fillButton);
+        } else if (genreClicked) {
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width / 2.0f,
+                                 fillButtonRect.top + fillButtonRect.height / 2.0f);
+            fillButton.setPosition(Vector2f(250, 475));
+            programWindow.draw(fillButton);
+        } else if (artistNameClicked) {
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width / 2.0f,
+                                 fillButtonRect.top + fillButtonRect.height / 2.0f);
+            fillButton.setPosition(Vector2f(250, 525));
+            programWindow.draw(fillButton);
+        } else if (albumNameClicked) {
+            FloatRect fillButtonRect = fillButton.getLocalBounds();
+            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width / 2.0f,
+                                 fillButtonRect.top + fillButtonRect.height / 2.0f);
+            fillButton.setPosition(Vector2f(250, 575));
             programWindow.draw(fillButton);
         }
-        else if (genreClicked){
-            FloatRect fillButtonRect = fillButton.getLocalBounds();
-            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
-            fillButton.setPosition(Vector2f(250,475));
-            programWindow.draw(fillButton);
-        }
-        else if (artistNameClicked){
-            FloatRect fillButtonRect = fillButton.getLocalBounds();
-            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
-            fillButton.setPosition(Vector2f(250,525));
-            programWindow.draw(fillButton);
-        }
-        else if (albumNameClicked){
-            FloatRect fillButtonRect = fillButton.getLocalBounds();
-            fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width/2.0f, fillButtonRect.top + fillButtonRect.height/2.0f);
-            fillButton.setPosition(Vector2f(250,575));
-            programWindow.draw(fillButton);
-        }
-        if (explicitClicked){
+        if (explicitClicked) {
             FloatRect explicitButtonRect = explicitFill.getLocalBounds();
-            explicitFill.setOrigin(explicitButtonRect.left + explicitButtonRect.width/2.0f, explicitButtonRect.top + explicitButtonRect.height/2.0f);
-            explicitFill.setPosition(Vector2f(450,500));
+            explicitFill.setOrigin(explicitButtonRect.left + explicitButtonRect.width / 2.0f,
+                                   explicitButtonRect.top + explicitButtonRect.height / 2.0f);
+            explicitFill.setPosition(Vector2f(450, 500));
             programWindow.draw(explicitFill);
         }
 
 
         if (userInputString.empty()) {
             FloatRect cursorRect = cursor.getLocalBounds();
-            cursor.setOrigin(cursorRect.left + cursorRect.width/2.0f, cursorRect.top + cursorRect.height/2.0f);
+            cursor.setOrigin(cursorRect.left + cursorRect.width / 2.0f, cursorRect.top + cursorRect.height / 2.0f);
             cursor.setPosition(400, 305);
             programWindow.draw(cursor);
-        }
-        else {
+        } else {
             cursor.setOrigin(userInputRect.left + userInputRect.width / 2.0f,
                              userInputRect.top + userInputRect.height / 2.0f);
             cursor.setPosition(
@@ -382,40 +353,202 @@ int main() {
             if (programEvent.type == Event::Closed) {
                 programWindow.close();
                 return 0;
-            }
-            else if (Mouse::isButtonPressed(Mouse::Left)){
-                if (songButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
-                    songClicked = !songClicked;
-                }
-                else if (genreButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
-                    genreClicked = !genreClicked;
-                }
-                else if (artistButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
-                    artistNameClicked = !artistNameClicked;
-                }
-                else if (albumButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
-                    albumNameClicked = !albumNameClicked;
-                }
-                else if (explicitButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)){
+            } else if (Mouse::isButtonPressed(Mouse::Left)) {
+                if (songButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
+                    songClicked = true;
+                    genreClicked = false;
+                    artistNameClicked = false;
+                    albumNameClicked = false;
+                } else if (genreButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
+                    genreClicked = true;
+                    songClicked = false;
+                    artistNameClicked = false;
+                    albumNameClicked = false;
+                } else if (artistButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
+                    artistNameClicked = true;
+                    songClicked = false;
+                    genreClicked = false;
+                    albumNameClicked = false;
+                } else if (albumButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
+                    albumNameClicked = true;
+                    songClicked = false;
+                    genreClicked = false;
+                    artistNameClicked = false;
+                } else if (explicitButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
                     explicitClicked = !explicitClicked;
                 }
-            }
-            else if (programEvent.type == Event::KeyPressed) {
+            } else if (programEvent.type == Event::KeyPressed) {
                 if (programEvent.key.code == Keyboard::Enter && userInputString.size() >= 1) {
-                    programWindow.close();
+                    RenderWindow resultWindow(VideoMode(800,800), "Results");
+
+                    View scroll;
+                    scroll.reset(FloatRect(0,0, 800,800));
+                    scroll.setViewport(FloatRect(0,0,1,1));
+                    resultWindow.setView(scroll);
+
+                    Text resultsTitle;
+                    resultsTitle.setString("Results");
+                    resultsTitle.setFont(font);
+                    resultsTitle.setCharacterSize(30);
+                    resultsTitle.setFillColor(Color::Green);
+                    resultsTitle.setStyle(Text::Bold);
+                    FloatRect resultsTitleRect = resultsTitle.getLocalBounds();
+                    resultsTitle.setOrigin(resultsTitleRect.left + resultsTitleRect.width / 2.0f,
+                                           resultsTitleRect.top + resultsTitleRect.height / 2.0f);
+                    resultsTitle.setPosition(Vector2f(400, 100));
+
+                    Text categoryTitle;
+                    categoryTitle.setString("Song Name\tArtist Name\tAlbum Name\tGenre" );
+                    categoryTitle.setFont(font);
+                    categoryTitle.setCharacterSize(18);
+                    categoryTitle.setFillColor(Color::White);
+                    categoryTitle.setStyle(Text::Bold);
+                    FloatRect categoryTitleRect = categoryTitle.getLocalBounds();
+                    categoryTitle.setOrigin(categoryTitleRect.left + categoryTitleRect.width / 2.0f,
+                                            categoryTitleRect.top + categoryTitleRect.height / 2.0f);
+                    categoryTitle.setPosition(Vector2f(400, 175));
+
+                    string resultingSongs;
+                    long long programDurationTime;
+
+                    if (songClicked){
+                        auto startTime = chrono::steady_clock::now();
+                        vector<string> songResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "song");
+                        auto endTime = chrono::steady_clock::now();
+                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
+
+                        for (int y = 0; y < songResults.size(); y++) {
+                            string singleCategory;
+                            string song = songResults[y];
+                            stringstream ss(song);
+
+                            while(getline(ss,singleCategory,';')){
+                                resultingSongs = resultingSongs + singleCategory + "\t";
+                            }
+
+                            resultingSongs = resultingSongs + "\n";
+                        }
+                    }
+                    else if (genreClicked){
+                        auto startTime = chrono::steady_clock::now();
+                        vector<string> genreResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "genre");
+                        auto endTime = chrono::steady_clock::now();
+                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
+
+                        for (int y = 0; y < genreResults.size(); y++) {
+                            string singleCategory;
+                            string song = genreResults[y];
+                            stringstream ss(song);
+
+                            while (getline(ss, singleCategory, ';')) {
+                                resultingSongs = resultingSongs + singleCategory + "\t";
+                            }
+
+                            resultingSongs = resultingSongs + "\n";
+                        }
+                    }
+                    else if (artistNameClicked){
+                        auto startTime = chrono::steady_clock::now();
+                        vector<string> artistResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "artist");
+                        auto endTime = chrono::steady_clock::now();
+                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
+
+                        for (int y = 0; y < artistResults.size(); y++) {
+                            string singleCategory;
+                            string song = artistResults[y];
+                            stringstream ss(song);
+
+                            while (getline(ss, singleCategory, ';')) {
+                                resultingSongs = resultingSongs + singleCategory + "\t";
+                            }
+
+                            resultingSongs = resultingSongs + "\n";
+                        }
+                    }
+                    else if (albumNameClicked){
+                        auto startTime = chrono::steady_clock::now();
+                        vector<string> albumNameResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "album");
+                        auto endTime = chrono::steady_clock::now();
+                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
+
+                        for (int y = 0; y < albumNameResults.size(); y++) {
+                            string singleCategory;
+                            string song = albumNameResults[y];
+                            stringstream ss(song);
+
+                            while (getline(ss, singleCategory, ';')) {
+                                resultingSongs = resultingSongs + singleCategory + "\t";
+                            }
+
+                            resultingSongs = resultingSongs + "\n";
+                        }
+                    }
+
+                    string programDurationString = to_string(programDurationTime);
+                    string time = "Time searched: " + programDurationString + " ns";
+
+                    Text timeTitle;
+                    timeTitle.setString(time);
+                    timeTitle.setFont(font);
+                    timeTitle.setCharacterSize(18);
+                    timeTitle.setFillColor(Color::White);
+                    FloatRect timeTitleRect = timeTitle.getLocalBounds();
+                    timeTitle.setOrigin(timeTitleRect.left + timeTitleRect.width / 2.0f,
+                                        timeTitleRect.top + timeTitleRect.height / 2.0f);
+                    timeTitle.setPosition(Vector2f(400, 140));
+
+                    Text songResultsTitle;
+                    songResultsTitle.setString(resultingSongs);
+                    songResultsTitle.setFont(font);
+                    songResultsTitle.setCharacterSize(15);
+                    songResultsTitle.setFillColor(Color::White);
+                    FloatRect songResultsTitleRect = categoryTitle.getGlobalBounds();
+                    songResultsTitle.setOrigin(songResultsTitle.getLocalBounds().width / 2.0f, 0);
+                    songResultsTitle.setPosition(400, songResultsTitleRect.top + songResultsTitleRect.height + 10);
+
+                    while (resultWindow.isOpen()){
+                        resultWindow.clear(Color::Black);
+                        resultWindow.draw(resultsTitle);
+                        resultWindow.draw(categoryTitle);
+                        resultWindow.draw(timeTitle);
+                        resultWindow.draw(songResultsTitle);
+
+                        Event resultEvent;
+                        while (resultWindow.pollEvent(resultEvent)){
+                            if (resultEvent.type == Event::Closed){
+                                resultWindow.close();
+                            }
+                            if (resultEvent.type == Event::KeyPressed){
+                                if (resultEvent.key.code == Keyboard::Down){
+                                    scroll.move(0,50);
+                                    resultWindow.setView(scroll);
+                                }
+                                else if (resultEvent.key.code == Keyboard::Up){
+                                    scroll.move(0,-50);
+                                    resultWindow.setView(scroll);
+                                }
+                                else if (resultEvent.key.code == Keyboard::Left){
+                                    scroll.move(-50,0);
+                                    resultWindow.setView(scroll);
+                                }
+                                else if (resultEvent.key.code == Keyboard::Right){
+                                    scroll.move(50,0);
+                                    resultWindow.setView(scroll);
+                                }
+                            }
+                        }
+                        resultWindow.display();
+                    }
                 } else if (programEvent.key.code == Keyboard::Backspace) {
                     userInputString.pop_back();
                     userInput.setString(userInputString);
-                } else if (programEvent.key.code == Keyboard::LShift || programEvent.key.code == Keyboard::RShift){
+                } else if (programEvent.key.code == Keyboard::LShift || programEvent.key.code == Keyboard::RShift) {
                     shift = true;
-                } else if (programEvent.key.code == Keyboard::Enter){
-                    programWindow.close();
                 }
-            }
-            else if (programEvent.type == Event::TextEntered) {
-                char userInputChar = (char)programEvent.text.unicode;
+            } else if (programEvent.type == Event::TextEntered) {
+                char userInputChar = (char) programEvent.text.unicode;
                 if (isalnum(userInputChar) || strchr(",./:;><?\"\'\\+=-_)(*&^%$#@!~`{}[] ", userInputChar)) {
-                    if (userInputString.length() >= 0 && userInputString.length() <= 30){
+                    if (userInputString.length() >= 0 && userInputString.length() <= 30) {
                         if (shift == true) {
                             userInputString += toupper(userInputChar);
                             userInput.setString(userInputString);
@@ -427,48 +560,9 @@ int main() {
                     }
                 }
                 FloatRect tempRect = userInput.getLocalBounds();
-                userInput.setOrigin(tempRect.left + tempRect.width/2.0f, tempRect.top + tempRect.height/2.0f);
+                userInput.setOrigin(tempRect.left + tempRect.width / 2.0f, tempRect.top + tempRect.height / 2.0f);
                 userInput.setPosition(400, 305);
                 userInputRect = userInput.getLocalBounds();
-            }
-        }
-    }
-
-    RenderWindow resultWindow(VideoMode(800,800), "Results");
-
-    if (songClicked){
-        auto startTime = chrono::steady_clock::now();
-        vector<string> songResults = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "song");
-        auto endTime = chrono::steady_clock::now();
-        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
-    }
-    else if (genreClicked){
-        auto startTime = chrono::steady_clock::now();
-        vector<string> genreResults = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "genre");
-        auto endTime = chrono::steady_clock::now();
-        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
-    }
-    else if (artistNameClicked){
-        auto startTime = chrono::steady_clock::now();
-        vector<string> artistResults = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "artist");
-        auto endTime = chrono::steady_clock::now();
-        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
-    }
-    else if (albumNameClicked){
-        auto startTime = chrono::steady_clock::now();
-        vector<string> albumNameClicked = search(toLowerCase(userInputString), artistMap, genreMap, songTree, albumTree, explicitClicked, "album");
-        auto endTime = chrono::steady_clock::now();
-        auto programDurationTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
-    }
-
-    while (resultWindow.isOpen()){
-        resultWindow.clear(Color::Black);
-
-        Event resultEvent;
-        while (resultWindow.pollEvent(resultEvent)){
-            if (resultEvent.type == Event::Closed){
-                resultWindow.close();
-                return 0;
             }
         }
     }

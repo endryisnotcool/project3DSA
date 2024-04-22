@@ -17,14 +17,12 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
     vector<song> songs;
     if (searchType == "song") {
         // search by song title
-        cout << "Songs with title matching '" << query << "': ";
         auto startTime = chrono::steady_clock::now();
         songs = songTree.treeSearch(toLowerCase(query));
         auto endTime = chrono::steady_clock::now();
         programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
     } else if (searchType == "artist") {
         // search by artist
-        cout << "Songs by artist matching '" << query << "': ";
         auto startTime = chrono::steady_clock::now();
         auto searchResult = artistMap.find(toLowerCase(query));
         auto endTime = chrono::steady_clock::now();
@@ -37,7 +35,6 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
         }
     } else if (searchType == "album") {
         // search by album
-        cout << "Songs from album matching '" << query << "': ";
         auto startTime = chrono::steady_clock::now();
         songs = albumTree.treeSearch(toLowerCase(query));
         auto endTime = chrono::steady_clock::now();
@@ -45,7 +42,6 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
 
     } else if (searchType == "genre") {
         // search by genre
-        cout << "Songs with genre matching '" << query << "': ";
         auto startTime = chrono::steady_clock::now();
         auto searchResult = genreMap.find(toLowerCase(query));
         auto endTime = chrono::steady_clock::now();
@@ -61,8 +57,7 @@ vector<string> search(const string& query, const unordered_map<string, vector<so
         cout << "Invalid search type. Please choose from 'song', 'artist', 'album', or 'genre'." << endl;
         return {""};
     }
-    cout << songs.size() << endl;
-    cout << "Time Searched for " << searchType << " category: " << to_string(programDurationTime) << "ns" << endl;
+    cout << "Time Searched for " << searchType << " category: " << to_string(programDurationTime) << " ns" << endl;
 
     //get songs ready for return by sorting and putting in proper format
     sort(songs.begin(), songs.end(), compareByPopularity);

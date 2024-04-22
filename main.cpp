@@ -409,13 +409,10 @@ int main() {
                     categoryTitle.setPosition(Vector2f(400, 175));
 
                     string resultingSongs;
-                    long long programDurationTime;
+                    string songsMatched;
 
                     if (songClicked){
-                        auto startTime = chrono::steady_clock::now();
                         vector<string> songResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "song");
-                        auto endTime = chrono::steady_clock::now();
-                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
 
                         for (int y = 0; y < songResults.size(); y++) {
                             string singleCategory;
@@ -423,17 +420,20 @@ int main() {
                             stringstream ss(song);
 
                             while(getline(ss,singleCategory,';')){
+                                if (singleCategory.length() >= 20){
+                                    singleCategory = singleCategory.substr(0,20);
+                                    singleCategory += "...";
+                                }
                                 resultingSongs = resultingSongs + singleCategory + "\t";
                             }
 
                             resultingSongs = resultingSongs + "\n";
                         }
+
+                        songsMatched = "Songs with title matching '" + userInputString + "': " + to_string(songResults.size());
                     }
                     else if (genreClicked){
-                        auto startTime = chrono::steady_clock::now();
                         vector<string> genreResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "genre");
-                        auto endTime = chrono::steady_clock::now();
-                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
 
                         for (int y = 0; y < genreResults.size(); y++) {
                             string singleCategory;
@@ -441,17 +441,19 @@ int main() {
                             stringstream ss(song);
 
                             while (getline(ss, singleCategory, ';')) {
+                                if (singleCategory.length() >= 20){
+                                    singleCategory = singleCategory.substr(0,20);
+                                    singleCategory += "...";
+                                }
                                 resultingSongs = resultingSongs + singleCategory + "\t";
                             }
 
                             resultingSongs = resultingSongs + "\n";
                         }
+                        songsMatched = "Songs with genre matching '" + userInputString + "': " + to_string(genreResults.size());
                     }
                     else if (artistNameClicked){
-                        auto startTime = chrono::steady_clock::now();
                         vector<string> artistResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "artist");
-                        auto endTime = chrono::steady_clock::now();
-                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
 
                         for (int y = 0; y < artistResults.size(); y++) {
                             string singleCategory;
@@ -459,17 +461,19 @@ int main() {
                             stringstream ss(song);
 
                             while (getline(ss, singleCategory, ';')) {
+                                if (singleCategory.length() >= 20){
+                                    singleCategory = singleCategory.substr(0,20);
+                                    singleCategory += "...";
+                                }
                                 resultingSongs = resultingSongs + singleCategory + "\t";
                             }
 
                             resultingSongs = resultingSongs + "\n";
                         }
+                        songsMatched = "Songs from artist matching '" + userInputString + "': " + to_string(artistResults.size());
                     }
                     else if (albumNameClicked){
-                        auto startTime = chrono::steady_clock::now();
                         vector<string> albumNameResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "album");
-                        auto endTime = chrono::steady_clock::now();
-                        programDurationTime = chrono::duration_cast<chrono::nanoseconds>(endTime - startTime).count();
 
                         for (int y = 0; y < albumNameResults.size(); y++) {
                             string singleCategory;
@@ -477,25 +481,27 @@ int main() {
                             stringstream ss(song);
 
                             while (getline(ss, singleCategory, ';')) {
+                                if (singleCategory.length() >= 20){
+                                    singleCategory = singleCategory.substr(0,20);
+                                    singleCategory += "...";
+                                }
                                 resultingSongs = resultingSongs + singleCategory + "\t";
                             }
 
                             resultingSongs = resultingSongs + "\n";
                         }
+                        songsMatched = "Songs from album matching '" + userInputString + "': " + to_string(albumNameResults.size());
                     }
 
-                    string programDurationString = to_string(programDurationTime);
-                    string time = "Time searched: " + programDurationString + " ns";
-
-                    Text timeTitle;
-                    timeTitle.setString(time);
-                    timeTitle.setFont(font);
-                    timeTitle.setCharacterSize(18);
-                    timeTitle.setFillColor(Color::White);
-                    FloatRect timeTitleRect = timeTitle.getLocalBounds();
-                    timeTitle.setOrigin(timeTitleRect.left + timeTitleRect.width / 2.0f,
+                    Text songsMatchedTitle;
+                    songsMatchedTitle.setString(songsMatched);
+                    songsMatchedTitle.setFont(font);
+                    songsMatchedTitle.setCharacterSize(18);
+                    songsMatchedTitle.setFillColor(Color::White);
+                    FloatRect timeTitleRect = songsMatchedTitle.getLocalBounds();
+                    songsMatchedTitle.setOrigin(timeTitleRect.left + timeTitleRect.width / 2.0f,
                                         timeTitleRect.top + timeTitleRect.height / 2.0f);
-                    timeTitle.setPosition(Vector2f(400, 140));
+                    songsMatchedTitle.setPosition(Vector2f(400, 140));
 
                     Text songResultsTitle;
                     songResultsTitle.setString(resultingSongs);
@@ -510,7 +516,7 @@ int main() {
                         resultWindow.clear(Color::Black);
                         resultWindow.draw(resultsTitle);
                         resultWindow.draw(categoryTitle);
-                        resultWindow.draw(timeTitle);
+                        resultWindow.draw(songsMatchedTitle);
                         resultWindow.draw(songResultsTitle);
 
                         Event resultEvent;

@@ -87,22 +87,17 @@ int main() {
 
     cout << endl << "successfully added " << numSongsAdded << " songs" << endl;
 
-
-    /*vector<string> test = search("mary on a cross", artistMap, genreMap, songTree, albumTree, true, "song");
-    for(string s : test) {
-       cout << s << endl;
-    }*/
-
-
+    //start initial program window
     RenderWindow programWindow(VideoMode(800, 800), "songSearcher");
     Font font;
 
-
+    //load font
     if (!font.loadFromFile("Metropolis-SemiBold.otf")) {
         cout << "can't load :(";
         return 0;
     }
 
+    //create the text object for the main title
     Text programName;
     programName.setString("WELCOME TO SONGSEARCHER");
     programName.setFont(font);
@@ -114,79 +109,73 @@ int main() {
                           programNameRect.top + programNameRect.height / 2.0f);
     programName.setPosition(Vector2f(400, 250));
 
-
+    //create text object for categories
     Text searchBy;
     searchBy.setString("Search By:");
     searchBy.setFont(font);
     searchBy.setCharacterSize(22);
-    //searchBy.setStyle(Text::Bold);
     searchBy.setFillColor(Color::White);
     FloatRect searchByRect = searchBy.getLocalBounds();
     searchBy.setOrigin(searchByRect.left + searchByRect.width / 2.0f,
                        searchByRect.top + searchByRect.height / 2.0f);
     searchBy.setPosition(Vector2f(260, 375));
 
-
+    //create labels for how to search the song
     Text songName;
     songName.setString("Song Name");
     songName.setFont(font);
     songName.setCharacterSize(18);
     songName.setFillColor(Color::White);
-    //songName.setStyle(Text::Bold);
     FloatRect songNameRect = songName.getLocalBounds();
     songName.setOrigin(songNameRect.left + songNameRect.width / 2.0f,
                        songNameRect.top + songNameRect.height / 2.0f);
     songName.setPosition(Vector2f(328, 425));
 
-
+    //same thing
     Text genreName;
     genreName.setString("Genre");
     genreName.setFont(font);
     genreName.setCharacterSize(18);
     genreName.setFillColor(Color::White);
-    //genreName.setStyle(Text::Bold);
     FloatRect genreNameRect = genreName.getLocalBounds();
     genreName.setOrigin(genreNameRect.left + genreNameRect.width / 2.0f,
                         genreNameRect.top + genreNameRect.height / 2.0f);
     genreName.setPosition(Vector2f(305, 475));
 
-
+    //same thing
     Text artistName;
     artistName.setString("Artist Name");
     artistName.setFont(font);
     artistName.setCharacterSize(18);
     artistName.setFillColor(Color::White);
-    //artistName.setStyle(Text::Bold);
     FloatRect artistNameRect = artistName.getLocalBounds();
     artistName.setOrigin(artistNameRect.left + artistNameRect.width / 2.0f,
                          artistNameRect.top + artistNameRect.height / 2.0f);
     artistName.setPosition(Vector2f(330, 525));
 
-
+    //same thing
     Text albumName;
     albumName.setString("Album Name");
     albumName.setFont(font);
     albumName.setCharacterSize(18);
     albumName.setFillColor(Color::White);
-    //albumName.setStyle(Text::Bold);
     FloatRect albumNameRect = albumName.getLocalBounds();
     albumName.setOrigin(albumNameRect.left + albumNameRect.width / 2.0f,
                         albumNameRect.top + albumNameRect.height / 2.0f);
     albumName.setPosition(Vector2f(335, 575));
 
-
+    //same thing
     Text explicitTitle;
     explicitTitle.setString("Explicit");
     explicitTitle.setFont(font);
     explicitTitle.setCharacterSize(18);
     explicitTitle.setFillColor(Color::White);
-    //explicitTitle.setStyle(Text::Bold);
     FloatRect explicitTitleRect = explicitTitle.getLocalBounds();
     explicitTitle.setOrigin(explicitTitleRect.left + explicitTitleRect.width / 2.0f,
                             explicitTitleRect.top + explicitTitleRect.height / 2.0f);
     explicitTitle.setPosition(Vector2f(515, 500));
 
-
+    //create text box
     RectangleShape rectangle(Vector2f(400, 30));
     rectangle.setFillColor(Color::White);
     rectangle.setOutlineColor(Color::Green);
@@ -196,7 +185,7 @@ int main() {
                         rectangleRect.top + rectangleRect.height / 2.0f);
     rectangle.setPosition(Vector2f(400, 305));
 
-
+    //shape for the song button that chooses to search by song
     CircleShape songButton(15);
     songButton.setFillColor(Color::White);
     songButton.setOutlineColor(Color::Green);
@@ -205,7 +194,7 @@ int main() {
     songButton.setOrigin(songRect.left + songRect.width / 2.0f, songRect.top + songRect.height / 2.0f);
     songButton.setPosition(Vector2f(250, 425));
 
-
+    //shape for the genre button that chooses to search by the genre
     CircleShape genreButton(15);
     genreButton.setFillColor(Color::White);
     genreButton.setOutlineColor(Color::Green);
@@ -214,7 +203,7 @@ int main() {
     genreButton.setOrigin(genreRect.left + genreRect.width / 2.0f, genreRect.top + genreRect.height / 2.0f);
     genreButton.setPosition(Vector2f(250, 475));
 
-
+    //shape for the artist button that chooses to search by artist
     CircleShape artistButton(15);
     artistButton.setFillColor(Color::White);
     artistButton.setOutlineColor(Color::Green);
@@ -223,7 +212,7 @@ int main() {
     artistButton.setOrigin(artistRect.left + artistRect.width / 2.0f, artistRect.top + artistRect.height / 2.0f);
     artistButton.setPosition(Vector2f(250, 525));
 
-
+    //shape for the album button that chooses to search by album names
     CircleShape albumButton(15);
     albumButton.setFillColor(Color::White);
     albumButton.setOutlineColor(Color::Green);
@@ -232,7 +221,7 @@ int main() {
     albumButton.setOrigin(albumRect.left + albumRect.width / 2.0f, albumRect.top + albumRect.height / 2.0f);
     albumButton.setPosition(Vector2f(250, 575));
 
-
+    //shape for the explicit button that chooses to search explicit songs
     CircleShape explicitButton(15);
     explicitButton.setFillColor(Color::White);
     explicitButton.setOutlineColor(Color::Red);
@@ -242,15 +231,15 @@ int main() {
                              explicitRect.top + explicitRect.height / 2.0f);
     explicitButton.setPosition(Vector2f(450, 500));
 
-
+    //shape to fill the shape whenever it is selected
     CircleShape fillButton(10);
     fillButton.setFillColor(Color::Green);
 
-
+    //shape to fill the shape whenever explicit is selected
     CircleShape explicitFill(10);
     explicitFill.setFillColor(Color::Red);
 
-
+    //string that will show the user input
     string userInputString;
     Text userInput;
     userInput.setString("");
@@ -263,13 +252,14 @@ int main() {
                         userInputRect.top + userInputRect.height / 2.0f);
     userInput.setPosition(Vector2f((float) 800 / 2.0f, ((float) 800 / 2.0f) - 95));
 
-
+    //show the cursor as the input gets longer and longer
     Text cursor;
     cursor.setString("|");
     cursor.setFont(font);
     cursor.setCharacterSize(18);
     cursor.setStyle(Text::Bold);
     cursor.setFillColor(Color::Green);
+    //bool variables in order to know when certain buttons are pressed and not
     bool shift = false;
     bool songClicked = true;
     bool genreClicked = false;
@@ -277,8 +267,9 @@ int main() {
     bool artistNameClicked = false;
     bool explicitClicked = false;
 
-
+    //while the initial window is open
     while (programWindow.isOpen()) {
+        //draw all of the elements that we created before
         programWindow.clear(Color::Black);
         programWindow.draw(programName);
         programWindow.draw(rectangle);
@@ -294,6 +285,8 @@ int main() {
         programWindow.draw(artistButton);
         programWindow.draw(albumButton);
         programWindow.draw(explicitButton);
+
+        //if one of the bool variables is true, move fill button to whichever button was clicked
         if (songClicked) {
             FloatRect fillButtonRect = fillButton.getLocalBounds();
             fillButton.setOrigin(fillButtonRect.left + fillButtonRect.width / 2.0f,
@@ -328,6 +321,8 @@ int main() {
         }
 
 
+        //code to move the cursor when the user input gets bigger or smaller
+        //this piece of code was taken from Endry Rodriguez's Minesweeper Project
         if (userInputString.empty()) {
             FloatRect cursorRect = cursor.getLocalBounds();
             cursor.setOrigin(cursorRect.left + cursorRect.width / 2.0f, cursorRect.top + cursorRect.height / 2.0f);
@@ -341,19 +336,22 @@ int main() {
             programWindow.draw(cursor);
         }
 
-
+        //display all of the elements
         programWindow.display();
 
-
+        //create an event object to know when something happens within the program
         Event programEvent;
+        //create an object that gets the x, y coordinates for the mouse
         Vector2i positionMouse = Mouse::getPosition(programWindow);
 
-
+        //while an event happens
         while (programWindow.pollEvent(programEvent)) {
             if (programEvent.type == Event::Closed) {
                 programWindow.close();
                 return 0;
-            } else if (Mouse::isButtonPressed(Mouse::Left)) {
+            }
+                //if one of the buttons is clicked for the main page, turn the rest to false to show that you selected one
+            else if (Mouse::isButtonPressed(Mouse::Left)) {
                 if (songButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
                     songClicked = true;
                     genreClicked = false;
@@ -377,15 +375,20 @@ int main() {
                 } else if (explicitButton.getGlobalBounds().contains(positionMouse.x, positionMouse.y)) {
                     explicitClicked = !explicitClicked;
                 }
-            } else if (programEvent.type == Event::KeyPressed) {
+            }
+                //if a certain key is pressed then a following piece of code will execute
+            else if (programEvent.type == Event::KeyPressed) {
+                //once the user has typed in a input, open the result window
                 if (programEvent.key.code == Keyboard::Enter && userInputString.size() >= 1) {
                     RenderWindow resultWindow(VideoMode(800,800), "Results");
 
+                    //create a view of the window so whenever a text object passes the bounds of the window, we can move the view to scroll
                     View scroll;
                     scroll.reset(FloatRect(0,0, 800,800));
                     scroll.setViewport(FloatRect(0,0,1,1));
                     resultWindow.setView(scroll);
 
+                    //title for the results page
                     Text resultsTitle;
                     resultsTitle.setString("Results");
                     resultsTitle.setFont(font);
@@ -397,6 +400,7 @@ int main() {
                                            resultsTitleRect.top + resultsTitleRect.height / 2.0f);
                     resultsTitle.setPosition(Vector2f(400, 100));
 
+                    //title for the categories
                     Text categoryTitle;
                     categoryTitle.setString("Song Name\tArtist Name\tAlbum Name\tGenre" );
                     categoryTitle.setFont(font);
@@ -411,9 +415,11 @@ int main() {
                     string resultingSongs;
                     string songsMatched;
 
+                    //if a button was clicked, look up what the user inputted with the category they wanted to search with
                     if (songClicked){
                         vector<string> songResults = search(userInputString, artistMap, genreMap, songTree, albumTree, explicitClicked, "song");
 
+                        //for every string, separate it using a ; delimiter in order to properly put out a string that will give all of the results
                         for (int y = 0; y < songResults.size(); y++) {
                             string singleCategory;
                             string song = songResults[y];
@@ -430,6 +436,7 @@ int main() {
                             resultingSongs = resultingSongs + "\n";
                         }
 
+                        //create a string that will display how many songs were found with the criteria you looked with
                         songsMatched = "Songs with title matching '" + userInputString + "': " + to_string(songResults.size());
                     }
                     else if (genreClicked){
@@ -493,6 +500,7 @@ int main() {
                         songsMatched = "Songs from album matching '" + userInputString + "': " + to_string(albumNameResults.size());
                     }
 
+                    //create a text object to display how many songs matched the description of what you looked for
                     Text songsMatchedTitle;
                     songsMatchedTitle.setString(songsMatched);
                     songsMatchedTitle.setFont(font);
@@ -500,9 +508,10 @@ int main() {
                     songsMatchedTitle.setFillColor(Color::White);
                     FloatRect timeTitleRect = songsMatchedTitle.getLocalBounds();
                     songsMatchedTitle.setOrigin(timeTitleRect.left + timeTitleRect.width / 2.0f,
-                                        timeTitleRect.top + timeTitleRect.height / 2.0f);
+                                                timeTitleRect.top + timeTitleRect.height / 2.0f);
                     songsMatchedTitle.setPosition(Vector2f(400, 140));
 
+                    //create a text object for all of the results that were obtained from the search
                     Text songResultsTitle;
                     songResultsTitle.setString(resultingSongs);
                     songResultsTitle.setFont(font);
@@ -512,6 +521,7 @@ int main() {
                     songResultsTitle.setOrigin(songResultsTitle.getLocalBounds().width / 2.0f, 0);
                     songResultsTitle.setPosition(400, songResultsTitleRect.top + songResultsTitleRect.height + 10);
 
+                    //while the result window is open
                     while (resultWindow.isOpen()){
                         resultWindow.clear(Color::Black);
                         resultWindow.draw(resultsTitle);
@@ -524,6 +534,7 @@ int main() {
                             if (resultEvent.type == Event::Closed){
                                 resultWindow.close();
                             }
+                            //if one of the arrows is clicked, scroll the page accordingly
                             if (resultEvent.type == Event::KeyPressed){
                                 if (resultEvent.key.code == Keyboard::Down){
                                     scroll.move(0,50);
@@ -545,18 +556,26 @@ int main() {
                         }
                         resultWindow.display();
                     }
-                } else if (programEvent.key.code == Keyboard::Backspace) {
+                }
+                    //if the user hits backspace, make sure nothing happens if there is nothing in the input string
+                else if (programEvent.key.code == Keyboard::Backspace) {
                     if (userInputString.length() > 0){
                         userInputString.pop_back();
                         userInput.setString(userInputString);
                     }
-                } else if (programEvent.key.code == Keyboard::LShift || programEvent.key.code == Keyboard::RShift) {
+                }
+                    //if the user clicks left shift or right shift, change the bool variable to true to signify when a letter is capital
+                else if (programEvent.key.code == Keyboard::LShift || programEvent.key.code == Keyboard::RShift) {
                     shift = true;
                 }
-            } else if (programEvent.type == Event::TextEntered) {
+            }
+                //if any text is entered, make sure that it is a letter or one of the special symbols
+                //some of this code was also referenced from Endry Rodriguez's Minesweeper project
+            else if (programEvent.type == Event::TextEntered) {
                 char userInputChar = (char) programEvent.text.unicode;
                 if (isalnum(userInputChar) || strchr(",./:;><?\"\'\\+=-_)(*&^%$#@!~`{}[] ", userInputChar)) {
                     if (userInputString.length() >= 0 && userInputString.length() <= 30) {
+                        //if shift is true, make sure to capitalize the letter that follows it
                         if (shift == true) {
                             userInputString += toupper(userInputChar);
                             userInput.setString(userInputString);
@@ -567,6 +586,7 @@ int main() {
                         }
                     }
                 }
+                // set the position of the userInputRect according to how the string grows
                 FloatRect tempRect = userInput.getLocalBounds();
                 userInput.setOrigin(tempRect.left + tempRect.width / 2.0f, tempRect.top + tempRect.height / 2.0f);
                 userInput.setPosition(400, 305);

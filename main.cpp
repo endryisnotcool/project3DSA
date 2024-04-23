@@ -64,7 +64,7 @@ int main() {
         int popularity = stoi(songData[5]);
         string duration = songData[6];
         bool isExplicit = true;
-        if (songData[7] == "false")
+        if (songData[7] == "False")
             isExplicit = false;
         string genre = songData[20];
 

@@ -44,10 +44,14 @@ private:
     Node* searchHelper(string name) const;
 
 public:
+
+    //constructor
     RBTree() : root(nullptr) {};
 
+    //public methods
     void insert(string name, song newSong);
-    vector<song> treeSearch(string name) const; // changes to const
+    vector<song> treeSearch(string name) const;
+
 };
 
 //right rotate around given node

@@ -1,5 +1,3 @@
-//song class
-
 #ifndef PROJECT3DSA_SONG_H
 #define PROJECT3DSA_SONG_H
 
@@ -8,8 +6,12 @@
 
 using namespace std;
 
+//song class
+//makes song objecs
 class song {
 private:
+
+    //instance variables
     vector<string> ARTIST;
     string TITLE;
     string ALBUM;
@@ -48,7 +50,7 @@ public:
     }
 };
 
-//for sorting
+//compare by popularity method for sorting
 static bool compareByPopularity(const song& a, const song& b) {
     return a.getPopularity() < b.getPopularity();
 }
